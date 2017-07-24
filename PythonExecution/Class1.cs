@@ -6,6 +6,7 @@ using IronPython.Runtime;
 using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
+using System.Collections.Generic;
 
 namespace python
 {
@@ -13,7 +14,17 @@ namespace python
     {
         public execute(string str)
         {
+
             ScriptEngine scriptEngine = Python.CreateEngine();
+
+            ICollection<string> paths = scriptEngine.GetSearchPaths();
+
+            if(!paths.Contains(@"\\pol-ad-d01731\site\scripts"))
+            { 
+                paths.Add(@"\\pol-ad-d01731\site\scripts");
+                scriptEngine.SetSearchPaths(paths);
+            }
+
             ScriptSource scriptSource = scriptEngine
                 .CreateScriptSourceFromString(str);
               //.CreateScriptSourceFromFile(ScriptPath

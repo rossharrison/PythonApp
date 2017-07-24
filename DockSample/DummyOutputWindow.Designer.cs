@@ -78,6 +78,6 @@ namespace DockSample
         #endregion
 
         private System.Windows.Forms.ComboBox comboBox;
-        private System.Windows.Forms.TextBox textBox1;
+        public System.Windows.Forms.TextBox textBox1;
     }
 }
