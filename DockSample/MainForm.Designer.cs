@@ -624,7 +624,7 @@ namespace DockSample
             this.dockPanel.DockLeftPortion = 200D;
             this.dockPanel.DockRightPortion = 200D;
             this.dockPanel.DockTopPortion = 150D;
-            this.dockPanel.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World, ((byte)(0)));
+            this.dockPanel.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World, ((byte)(0)));
             this.dockPanel.Location = new System.Drawing.Point(0, 55);
             this.dockPanel.Name = "dockPanel";
             this.dockPanel.RightToLeftLayout = true;

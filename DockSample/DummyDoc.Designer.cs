@@ -142,6 +142,6 @@ namespace DockSample
         private System.Windows.Forms.ToolStripMenuItem menuItem5;
         private System.Windows.Forms.ToolStripMenuItem menuItemCheckTest;
         private System.Windows.Forms.ToolTip toolTip;
-        public System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox richTextBox1;
     }
 }

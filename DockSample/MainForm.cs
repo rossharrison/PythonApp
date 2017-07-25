@@ -617,16 +617,9 @@ namespace DockSample
 
         private void toolBarButtonTaskList_Click(object sender, EventArgs e)
         {
-            DummyDoc doc = (DummyDoc)FindDocument("Document1");
-            var a = new execute(doc.richTextBox1.Text.ToString());
-            if(a.ExceptionMessage==null)
-            { 
-                m_outputWindow.textBox1.Text = m_outputWindow.textBox1.Text.ToString() + "\r\n" + a.StdOut.ToString();
-            }
-            else
-            {
-                m_outputWindow.textBox1.Text = m_outputWindow.textBox1.Text.ToString() + "\r\n" + a.ExceptionMessage.ToString();
-            }
+
+            var a = new python.execute("print('hello')");
+            
         }
     }
 }
