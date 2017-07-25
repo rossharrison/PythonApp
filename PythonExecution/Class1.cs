@@ -6,6 +6,7 @@ using IronPython.Runtime;
 using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
+using Python.Runtime;
 using System.Collections.Generic;
 
 namespace python
@@ -15,21 +16,28 @@ namespace python
         public execute(string str)
         {
 
-            ScriptEngine scriptEngine = Python.CreateEngine();
+            //PyObject result = PythonEngine.Eval(str);
+
+            //;
+
+
+
+            
+            ScriptEngine scriptEngine = IronPython.Hosting.Python.CreateEngine();
 
             ICollection<string> paths = scriptEngine.GetSearchPaths();
 
-            if(!paths.Contains(@"\\pol-ad-d01731\site\scripts"))
-            { 
+            if (!paths.Contains(@"\\pol-ad-d01731\site\scripts"))
+            {
                 paths.Add(@"\\pol-ad-d01731\site\scripts");
                 scriptEngine.SetSearchPaths(paths);
             }
 
             ScriptSource scriptSource = scriptEngine
                 .CreateScriptSourceFromString(str);
-              //.CreateScriptSourceFromFile(ScriptPath
-                //                          , Encoding.ASCII
-                  //                        , SourceCodeKind.File);
+            //.CreateScriptSourceFromFile(ScriptPath
+            //                          , Encoding.ASCII
+            //                        , SourceCodeKind.File);
 
             ScriptScope sys = scriptEngine.GetSysModule();
             var argv = new List { ScriptName, Arg1, Arg2, Arg3, Arg4, Arg5 };
