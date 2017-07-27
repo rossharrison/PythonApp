@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using python;
+using Data;
+
 namespace DockSample
 {
     public partial class MainForm : Form
@@ -618,8 +620,17 @@ namespace DockSample
         private void toolBarButtonTaskList_Click(object sender, EventArgs e)
         {
 
-            var a = new python.execute("print('hello')");
-            
+            DummyDoc doc = (DummyDoc)FindDocument("Document1");
+            var a = new execute(doc.textbox);
+            if (a.py.ExceptionMessage == null)
+            {
+                m_outputWindow.textbox = m_outputWindow.textbox + "\r\n" + a.py.StdOut.ToString();
+            }
+            else
+            {
+                m_outputWindow.textbox = m_outputWindow.textbox + "\r\n" + a.py.ExceptionMessage.ToString();
+            }
+
         }
     }
 }

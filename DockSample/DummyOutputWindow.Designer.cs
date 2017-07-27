@@ -6,7 +6,10 @@ namespace DockSample
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-
+        public string textbox
+        {
+            get { return textBox1.Text.ToString(); } set { textBox1.Text = value; }
+        }
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>

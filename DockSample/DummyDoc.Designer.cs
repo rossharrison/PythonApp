@@ -7,6 +7,11 @@ namespace DockSample
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
+        public string textbox
+        {
+            get { return richTextBox1.Text.ToString(); } set { richTextBox1.Text = value; }
+        }
+
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>

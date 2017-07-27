@@ -4,19 +4,24 @@ using System.Text;
 using IronPython.Hosting;
 using IronPython.Runtime;
 using IronPython.Runtime.Exceptions;
+using Python.Runtime;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
 using System.Collections.Generic;
+using Data;
 
 namespace python
 {
     public class execute
     {
+        public PythonResponse py = new PythonResponse();
+
         public execute(string str)
         {
+            
+            ScriptEngine scriptEngine = IronPython.Hosting.Python.CreateEngine();
 
-            ScriptEngine scriptEngine = Python.CreateEngine();
-
+            scriptEngine.ImportModule("PythonDateTime");
             ICollection<string> paths = scriptEngine.GetSearchPaths();
 
             if(!paths.Contains(@"\\pol-ad-d01731\site\scripts"))
@@ -26,13 +31,13 @@ namespace python
             }
 
             ScriptSource scriptSource = scriptEngine
-                .CreateScriptSourceFromString(str);
+                .CreateScriptSourceFromString(str + "\n");
             //.CreateScriptSourceFromFile(ScriptPath
             //                          , Encoding.ASCII
             //                        , SourceCodeKind.File);
 
             ScriptScope sys = scriptEngine.GetSysModule();
-            var argv = new List { ScriptName, Arg1, Arg2, Arg3, Arg4, Arg5 };
+            var argv = new List { py.ScriptName, py.Arg1, py.Arg2, py.Arg3, py.Arg4, py.Arg5 };
             sys.SetVariable("argv", argv);
 
             using (var memoryStream = new MemoryStream())
@@ -42,19 +47,19 @@ namespace python
                 {
                     object thing = scriptSource.Execute();
                     if (thing != null)
-                        Result = thing.ToString();
+                        py.Result = thing.ToString();
                 }
                 catch (SystemExitException e)
                 {
                     object otherCode;
-                    ExitCode = e.GetExitCode(out otherCode);
+                    py.ExitCode = e.GetExitCode(out otherCode);
                     if (otherCode != null)
-                        OtherCode = otherCode.ToString();
+                        py.OtherCode = otherCode.ToString();
                 }
                 catch (Exception e)
                 {
                     var eo = scriptEngine.GetService<ExceptionOperations>();
-                    ExceptionMessage = eo.FormatException(e);
+                    py.ExceptionMessage = eo.FormatException(e);
                 }
                 finally
                 {
@@ -62,21 +67,25 @@ namespace python
                     var bytes = new byte[length];
                     memoryStream.Seek(0, SeekOrigin.Begin);
                     memoryStream.Read(bytes, 0, length);
-                    StdOut = Encoding.UTF8.GetString(bytes, 0, length).Trim();
+                    py.StdOut = Encoding.UTF8.GetString(bytes, 0, length).Trim();
                 }
             }
         }
-        public string ScriptPath { get; set; }
-        public string Arg1 { get; set; }
-        public string Arg2 { get; set; }
-        public string Arg3 { get; set; }
-        public string Arg4 { get; set; }
-        public string Arg5 { get; set; }
-        public string ScriptName { get; set; }
-        public string Result { get; set; }
-        public int ExitCode { get; set; }
-        public string OtherCode { get; set; }
-        public string ExceptionMessage { get; set; }
-        public string StdOut { get; set; }
+
+
+
+
+        //public string ScriptPath { get; set; }
+        //public string Arg1 { get; set; }
+        //public string Arg2 { get; set; }
+        //public string Arg3 { get; set; }
+        //public string Arg4 { get; set; }
+        //public string Arg5 { get; set; }
+        //public string ScriptName { get; set; }
+        //public string Result { get; set; }
+        //public int ExitCode { get; set; }
+        //public string OtherCode { get; set; }
+        //public string ExceptionMessage { get; set; }
+        //public string StdOut { get; set; }
     }
 }
